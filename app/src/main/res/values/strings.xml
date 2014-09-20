@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">nakol eh</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="nakol">nakol</string>
+    <string name="eh">eh</string>
+    <string name="error_no_connection">No Internet Connection !</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_social_login">SocialLoginActivity</string>
+    <string name="login">Login</string>
+    <string name="app_id">535529049915519</string>
+
+</resources>

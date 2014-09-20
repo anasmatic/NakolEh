@@ -1,0 +1,26 @@
+Alias name: nakoleh
+Creation date: 19/07/2014
+Entry type: PrivateKeyEntry
+Certificate chain length: 1
+Certificate[1]:
+Owner: CN=Anas Metwally, OU=nakoleh, O=anasmatic
+Issuer: CN=Anas Metwally, OU=nakoleh, O=anasmatic
+Serial number: 349f73e0
+Valid from: Sat Jul 19 17:28:33 EET 2014 until: Sun Jun 25 17:28:33 EET 2113
+Certificate fingerprints:
+         MD5:  19:B7:71:8A:64:B3:0D:38:9D:D7:E1:79:BB:98:F8:DD
+         SHA1: 42:C0:E4:06:1D:12:D5:13:5D:58:FE:86:3A:48:C2:70:18:99:3A:B5
+         SHA256: F0:46:A0:04:8F:8D:F7:5C:58:B6:F5:EF:4D:01:00:3A:56:45:FF:6B:B0:
+AC:A0:27:CD:7F:05:F5:A8:E3:CD:F5
+         Signature algorithm name: SHA256withRSA
+         Version: 3
+
+Extensions:
+
+#1: ObjectId: 2.5.29.14 Criticality=false
+SubjectKeyIdentifier [
+KeyIdentifier [
+0000: 67 AC 5D 98 25 FA C6 32   C1 A0 12 73 DA 21 0B AF  g.].%..2...s.!..
+0010: B1 DE A9 5F                                        ..._
+]
+]
