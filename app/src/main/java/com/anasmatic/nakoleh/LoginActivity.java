@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import com.facebook.Request;
 import com.facebook.Response;
@@ -15,6 +14,9 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoginActivity extends Activity implements
         View.OnClickListener{
@@ -73,12 +75,16 @@ public class LoginActivity extends Activity implements
 
     private void facbookSession()
     {
+        List<String> permissions = new ArrayList<String>();
+        permissions.add("email");
         // start Facebook Login
-        Session.openActiveSession(this, true, new Session.StatusCallback() {
+        Session.openActiveSession(this, true,permissions, new Session.StatusCallback() {
 
             // callback when session changes state
             @Override
             public void call(Session session, SessionState state, Exception exception) {
+                Log.d(TAG+".facebookSession","isOpened:"+session.isOpened()+" ,isClosed:"+session.isClosed());
+
                 if (session.isOpened()) {
 
                     // make request to the /me API
@@ -87,15 +93,24 @@ public class LoginActivity extends Activity implements
                         // callback after Graph API response with user object
                         @Override
                         public void onCompleted(GraphUser user, Response response) {
-                            if (user != null)
-                                Log.d(TAG+"facebookSession","Hello " + user.getName() + "!");
-                            else
+                            if (user != null) {
+                                chickMyAccount(user);
+                                Log.d(TAG + "facebookSession", "Hello " + user.getName() + " ,id:" + user.getId() + " ,location:" + user.getLocation());
+                                Log.d(TAG+".facebookSession","email:"+user.getProperty("email").toString());
+                            }else
                                 Log.d(TAG+"facebookSession","User is NULL !");
                         }
                     }).executeAsync();
                 }
+
             }
         });
+    }
+
+    private void chickMyAccount(GraphUser user) {
+        //TODO: chick if user has an account related to his fbid,
+        //if has, get his data
+        //if not, create new account.
     }
 
     /**
