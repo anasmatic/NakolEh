@@ -18,12 +18,12 @@ import com.facebook.widget.LoginButton;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoginActivity extends Activity implements
+public class LoginActivity_facebookWorking extends Activity implements
         View.OnClickListener{
 
     private static final int RC_SIGN_IN = 0;
 
-    private static final String TAG = "LoginActivity";
+    private static final String TAG = "LoginActivity_facebookWorking";
 
     private static final String KEY_IN_RESOLUTION = "is_in_resolution";
 
@@ -139,7 +139,7 @@ public class LoginActivity extends Activity implements
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
         case REQUEST_CODE_RESOLUTION:
-            Log.d("LoginActivity.onActivityResult","REQUEST_CODE_RESOLUTION");
+            Log.d("LoginActivity_facebookWorking.onActivityResult","REQUEST_CODE_RESOLUTION");
             break;
         }
 
