@@ -2,6 +2,7 @@ package com.anasmatic.nakoleh;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -9,36 +10,48 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.anasmatic.nakoleh.constant.NakolEhConstants;
+import com.anasmatic.nakoleh.constant.C;
+import com.anasmatic.nakoleh.service.connectivity.CheckConnectivity;
+import com.anasmatic.nakoleh.service.connectivity.ConnectivityChangeReceiver;
 
 
 public class SplashActivity extends ActionBarActivity {
 
+    //private ConnectivityChangeReceiver mReceiver;
+    TextView errorMsg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        TextView errorText = (TextView) findViewById(R.id.errorText);
-        ConnectivityManager connMng = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMng.getActiveNetworkInfo();
-        if(networkInfo != null && networkInfo.isConnected())
-            errorText.setText("");
-        else
-            errorText.setText(R.string.error_no_connection);
 
-
+        errorMsg = (TextView) findViewById(R.id.connectionErrorTextView);
+        errorMsg.setVisibility(View.INVISIBLE);
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+/*
+        this.mReceiver = new ConnectivityChangeReceiver();
+        registerReceiver(
+                this.mReceiver,
+                new IntentFilter(
+                        ConnectivityManager.CONNECTIVITY_ACTION));
+*/
+        if(CheckConnectivity.isOnline(SplashActivity.this) == false)
+        {
+            errorMsg.setVisibility(View.VISIBLE);
+            Toast.makeText(SplashActivity.this,"إتأكد إنك عندك نت!!",Toast.LENGTH_LONG).show();
+            return;
+        }
 
-
-        SharedPreferences sharedUserDate = getSharedPreferences(NakolEhConstants.SHARED_USER_DATA_NAME,MODE_PRIVATE);
+        SharedPreferences sharedUserDate = getSharedPreferences(C.SHARED_USER_DATA_NAME,MODE_PRIVATE);
         int userId = sharedUserDate.getInt("userId",0);//in case users are in billions or id system changed to bigger values , use long and getLong()
         Intent intent = null;
         if(userId == 0)
@@ -54,6 +67,12 @@ public class SplashActivity extends ActionBarActivity {
         startActivity(intent);
 
         finish();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+//        unregisterReceiver(mReceiver);
     }
 
     @Override

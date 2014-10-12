@@ -24,3 +24,6 @@ KeyIdentifier [
 0010: B1 DE A9 5F                                        ..._
 ]
 ]
+
+
+debug cert pass = 123456

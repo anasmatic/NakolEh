@@ -98,8 +98,7 @@ public class LoginActivity_backup extends Activity implements
                         @Override
                         public void onCompleted(GraphUser user, Response response) {
                             if (user != null) {
-                                TextView welcome = (TextView) findViewById(R.id.welcome);
-                                welcome.setText("Hello " + user.getName() + "!");
+
                             }
                         }
                     }).executeAsync();
