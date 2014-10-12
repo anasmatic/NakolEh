@@ -1,17 +1,33 @@
 package com.anasmatic.nakoleh;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.TextView;
 
 
 public class CreateAccountActivity extends ActionBarActivity {
+
+    private static final String TAG = "CreateAccountActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
+
+        Bundle userDataBundle = getIntent().getExtras();
+        EditText uNameEditText = (EditText) findViewById(R.id.uNameEditText);
+                 uNameEditText.setText(userDataBundle.getString("uName"), TextView.BufferType.EDITABLE);
+        Boolean isMale = (userDataBundle.getString("gender").equals("male")) ? true:false;
+        Log.d(TAG+".gender?",userDataBundle.getString("gender"));
+        Log.d(TAG+".isMale?",isMale.toString());
+        RadioButton maleRadioButton = (RadioButton) findViewById(R.id.maleRadioButton);
+        maleRadioButton.setChecked(isMale);
     }
 
 

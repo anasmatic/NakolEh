@@ -60,6 +60,7 @@ public class LoginActivity extends Activity
 //--- g+
     private PlusClient mPlusClient;
     private ConnectionResult mConnectionResult;
+    private GraphUser facebookUser;
 
 
     @Override
@@ -96,7 +97,6 @@ public class LoginActivity extends Activity
     @Override
     protected void onResume() {
         super.onResume();
-        finish();
     }
 
     protected void onStop() {
@@ -136,6 +136,7 @@ public class LoginActivity extends Activity
     public void chickMyAccount(GraphUser user) {
         //TODO: chick if user has an account related to his fbid,
         Log.d(TAG+"chickMyAccount","user:"+user.toString());
+        facebookUser = user;
         LoginService.requestUser(LoginActivity.this, user.getId(), true);
         //if has, get his data
         //if not, create new account.
@@ -198,6 +199,12 @@ public class LoginActivity extends Activity
             Log.d(TAG+"updateDisplay","go to create user Activity");
             //go to create user Activity
             intent = new Intent(LoginActivity.this, CreateAccountActivity.class);
+            Bundle userDataBundle = new Bundle();
+            userDataBundle.putString("uName",facebookUser.getName());
+            userDataBundle.putString("gender",facebookUser.asMap().get("gender").toString());
+            intent.putExtras(userDataBundle);
+            startActivity(intent);
+            finish();
         }
         else
         {

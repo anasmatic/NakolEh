@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.anasmatic.nakoleh.service.connectivity.ConnectivityChangeReceiver;
 
 public class SplashActivity extends ActionBarActivity {
 
+    private static final String TAG = "SplashActivity";
     //private ConnectivityChangeReceiver mReceiver;
     TextView errorMsg;
     @Override
@@ -28,10 +30,35 @@ public class SplashActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-
         errorMsg = (TextView) findViewById(R.id.connectionErrorTextView);
         errorMsg.setVisibility(View.INVISIBLE);
 
+
+        if(CheckConnectivity.isOnline(SplashActivity.this) == false)
+        {
+            errorMsg.setVisibility(View.VISIBLE);
+            Toast.makeText(SplashActivity.this,"إتأكد إنك عندك نت!!",Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        SharedPreferences sharedUserDate = getSharedPreferences(C.SHARED_USER_DATA_NAME,MODE_PRIVATE);
+        int userId = sharedUserDate.getInt("userId",0);//in case users are in billions or id system changed to bigger values , use long and getLong()
+        Intent intent = null;
+        Log.i(TAG+".SharedPreferences","id:"+userId);
+        if(userId == 0)
+        {
+            Log.i(TAG+".go to","LoginActivity");
+            // go to LoginActivity
+            intent = new Intent(SplashActivity.this, LoginActivity.class);
+        }
+        else
+        {
+            //go to MealsActivity
+        }
+
+        startActivity(intent);
+
+        finish();
     }
 
     @Override
@@ -44,29 +71,6 @@ public class SplashActivity extends ActionBarActivity {
                 new IntentFilter(
                         ConnectivityManager.CONNECTIVITY_ACTION));
 */
-        if(CheckConnectivity.isOnline(SplashActivity.this) == false)
-        {
-            errorMsg.setVisibility(View.VISIBLE);
-            Toast.makeText(SplashActivity.this,"إتأكد إنك عندك نت!!",Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        SharedPreferences sharedUserDate = getSharedPreferences(C.SHARED_USER_DATA_NAME,MODE_PRIVATE);
-        int userId = sharedUserDate.getInt("userId",0);//in case users are in billions or id system changed to bigger values , use long and getLong()
-        Intent intent = null;
-        if(userId == 0)
-        {
-            // go to LoginActivity
-            intent = new Intent(SplashActivity.this, LoginActivity.class);
-        }
-        else
-        {
-            //go to MealsActivity
-        }
-
-        startActivity(intent);
-
-        finish();
     }
 
     @Override
